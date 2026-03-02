@@ -1,0 +1,465 @@
+{
+  "version": "v1",
+  "macros": [
+    "level",
+    "brightness",
+    "harshness",
+    "body",
+    "tighten",
+    "crunch",
+    "width",
+    "space"
+  ],
+  "value_convention": {
+    "macro_range": [0, 100],
+    "deltas_are_points": true,
+    "clamp_after_apply": true,
+    "apply_order": ["level", "brightness", "harshness", "body", "tighten", "crunch", "width", "space"]
+  },
+  "modifiers": {
+    "intensity_words": {
+      "slightly": 0.5,
+      "a little": 0.5,
+      "bit": 0.5,
+      "somewhat": 0.75,
+      "more": 1.0,
+      "really": 1.5,
+      "way": 1.5,
+      "much": 1.5,
+      "super": 2.0,
+      "very": 1.25
+    },
+    "negation_words": ["not", "without", "less", "no"],
+    "conjunctions": ["and", "but", "however", "though"],
+    "caps_boost": {
+      "enabled": true,
+      "factor": 1.25,
+      "rule": "if token is ALL_CAPS or has !!! then multiply intensity by factor"
+    }
+  },
+  "phrases": [
+    {
+      "id": "brighten",
+      "match_any": ["brighter", "brighten", "more bright", "add brightness", "more top", "more sparkle", "more shimmer"],
+      "delta": { "brightness": 10 }
+    },
+    {
+      "id": "darken",
+      "match_any": ["darker", "darken", "less bright", "take off top", "less sparkle", "less shimmer"],
+      "delta": { "brightness": -10 }
+    },
+    {
+      "id": "air_up",
+      "match_any": ["more air", "add air", "open it up", "more open", "more breath"],
+      "delta": { "brightness": 8, "harshness": -3 }
+    },
+    {
+      "id": "air_down",
+      "match_any": ["less air", "too airy", "take out air", "less open"],
+      "delta": { "brightness": -8 }
+    },
+    {
+      "id": "harsh_down",
+      "match_any": ["less harsh", "not harsh", "tame harsh", "harshness down", "smooth it", "smoother", "soften the top", "ice picky", "icepick", "piercing"],
+      "delta": { "harshness": -12 }
+    },
+    {
+      "id": "harsh_up",
+      "match_any": ["more edge", "more aggressive", "more cut", "more presence", "sharper"],
+      "delta": { "harshness": 6, "brightness": 4 }
+    },
+    {
+      "id": "fizz_down",
+      "match_any": ["less fizz", "tame fizz", "fizzy", "too fizzy", "less sizzle", "tame sizzle"],
+      "delta": { "brightness": -6, "harshness": -8 }
+    },
+    {
+      "id": "mud_down",
+      "match_any": ["less mud", "remove mud", "muddy", "too muddy", "clean up low mids", "less low mids", "less woof"],
+      "delta": { "body": -10, "tighten": 6 }
+    },
+    {
+      "id": "boxy_down",
+      "match_any": ["less boxy", "boxy", "cardboard", "hollow", "nasal"],
+      "delta": { "body": -8, "harshness": -3 }
+    },
+    {
+      "id": "thin_fix",
+      "match_any": ["too thin", "thin", "needs weight", "needs meat", "more thickness", "thicker", "fatter", "fill it out"],
+      "delta": { "body": 12, "brightness": -3 }
+    },
+    {
+      "id": "boomy_down",
+      "match_any": ["too boomy", "boomy", "boom", "low end too much", "too much bass", "flubby low end"],
+      "delta": { "tighten": 10, "body": -6 }
+    },
+    {
+      "id": "tighten",
+      "match_any": ["tighten", "tighter", "more tight", "less flub", "less flubby", "stop flubbing", "cleaner low end"],
+      "delta": { "tighten": 12, "body": -4 }
+    },
+    {
+      "id": "loosen",
+      "match_any": ["looser", "less tight", "more bloom", "more sag", "let it breathe"],
+      "delta": { "tighten": -10, "body": 4 }
+    },
+    {
+      "id": "palm_mutes_tighten",
+      "match_any": ["tighten palm mutes", "palm mutes tighter", "palm mutes flub", "palm mutes are flubby", "chugs tighter", "tighten chugs"],
+      "delta": { "tighten": 16, "body": -8, "crunch": -4 }
+    },
+    {
+      "id": "crunch_down",
+      "match_any": ["less crunchy", "too crunchy", "crunchy", "back off crunch", "less grind", "less distortion", "cleaner", "clean it up"],
+      "delta": { "crunch": -14, "harshness": -6 }
+    },
+    {
+      "id": "crunch_up",
+      "match_any": ["more crunchy", "more crunch", "more grind", "more distortion", "dirtier", "more grit", "grittier"],
+      "delta": { "crunch": 12, "harshness": 3 }
+    },
+    {
+      "id": "sustain_up",
+      "match_any": ["more sustain", "sustain", "hold longer", "less decay", "glue it"],
+      "delta": { "crunch": 6, "tighten": -3 }
+    },
+    {
+      "id": "attack_up",
+      "match_any": ["more attack", "more pick", "more pick attack", "sharpen attack", "more bite"],
+      "delta": { "tighten": 6, "brightness": 6, "harshness": 2 }
+    },
+    {
+      "id": "attack_down",
+      "match_any": ["less attack", "soften attack", "tame pick", "tame pick attack", "rounder", "round it off"],
+      "delta": { "tighten": -6, "harshness": -6, "brightness": -2 }
+    },
+    {
+      "id": "presence_up",
+      "match_any": ["more present", "bring forward", "forward", "closer", "up front"],
+      "delta": { "brightness": 6, "level": 3 }
+    },
+    {
+      "id": "presence_down",
+      "match_any": ["less present", "push back", "further back", "more distant"],
+      "delta": { "brightness": -4, "level": -3 }
+    },
+    {
+      "id": "level_up",
+      "match_any": ["louder", "turn up", "more level", "up a bit", "raise it"],
+      "delta": { "level": 6 }
+    },
+    {
+      "id": "level_down",
+      "match_any": ["quieter", "turn down", "lower it", "down a bit", "too loud"],
+      "delta": { "level": -6 }
+    },
+    {
+      "id": "level_match",
+      "match_any": ["level match", "match volume", "same loudness"],
+      "delta": { "level": 0 }
+    },
+    {
+      "id": "wider",
+      "match_any": ["wider", "make it wide", "more wide", "spread it", "bigger stereo", "widen"],
+      "delta": { "width": 14 }
+    },
+    {
+      "id": "narrower",
+      "match_any": ["narrower", "less wide", "more mono", "center it", "too wide", "tighten stereo"],
+      "delta": { "width": -14 }
+    },
+    {
+      "id": "centered",
+      "match_any": ["mono", "make it mono", "collapse", "collapse stereo"],
+      "delta": { "width": -25 }
+    },
+    {
+      "id": "space_up",
+      "match_any": ["more reverb", "more verb", "more room", "more space", "more ambience", "more delay", "more tail", "washier"],
+      "delta": { "space": 14 }
+    },
+    {
+      "id": "space_down",
+      "match_any": ["less reverb", "less verb", "dryer", "dry", "dry it up", "less room", "less space", "less delay", "too wet"],
+      "delta": { "space": -14 }
+    },
+    {
+      "id": "intimate",
+      "match_any": ["more intimate", "closer and drier", "in your face", "right here"],
+      "delta": { "space": -10, "level": 3, "brightness": 3 }
+    },
+    {
+      "id": "live_room",
+      "match_any": ["more live", "live room", "roomy", "like a room", "in a room"],
+      "delta": { "space": 10, "brightness": -2 }
+    },
+    {
+      "id": "warm_up",
+      "match_any": ["warmer", "warm it up", "more warm", "less cold", "cozier"],
+      "delta": { "body": 10, "brightness": -6, "harshness": -3 }
+    },
+    {
+      "id": "cool_down",
+      "match_any": ["cooler", "less warm", "too warm", "less cozy"],
+      "delta": { "body": -8, "brightness": 4 }
+    },
+    {
+      "id": "clarity_up",
+      "match_any": ["clearer", "more clarity", "cleaner clarity", "define it", "less cloudy"],
+      "delta": { "tighten": 8, "body": -6, "brightness": 4 }
+    },
+    {
+      "id": "smooth",
+      "match_any": ["smooth", "smoother", "silky", "polish", "less scratchy"],
+      "delta": { "harshness": -10, "crunch": -4, "brightness": 2 }
+    },
+    {
+      "id": "grind",
+      "match_any": ["more grind", "grindier", "more snarl", "snarlier"],
+      "delta": { "crunch": 10, "harshness": 4, "body": 2 }
+    },
+    {
+      "id": "chunk",
+      "match_any": ["more chunk", "chunkier", "bigger chugs", "heavier"],
+      "delta": { "body": 8, "tighten": 6, "crunch": 4 }
+    },
+    {
+      "id": "less_chunk",
+      "match_any": ["less chunk", "too chunky", "too heavy"],
+      "delta": { "body": -8, "crunch": -4 }
+    },
+    {
+      "id": "sparkle_not_harsh_combo",
+      "match_any": ["sparkly but not harsh", "brighter but not harsh", "more sparkle not harsh", "more shimmer not harsh"],
+      "delta": { "brightness": 12, "harshness": -10 }
+    },
+    {
+      "id": "bite_not_fizz_combo",
+      "match_any": ["more bite but less fizz", "bite without fizz", "more bite not fizzy"],
+      "delta": { "brightness": 10, "harshness": -6, "crunch": -2 }
+    },
+    {
+      "id": "tight_but_warm_combo",
+      "match_any": ["tight but warm", "tighter but warmer", "less flub but warm"],
+      "delta": { "tighten": 12, "body": 6, "brightness": -2 }
+    },
+    {
+      "id": "bigger_not_louder",
+      "match_any": ["bigger but not louder", "bigger without louder", "make it bigger not louder"],
+      "delta": { "width": 10, "space": 6, "level": 0 }
+    },
+    {
+      "id": "cut_through",
+      "match_any": ["cut through", "cuts through", "more cut through", "stand out"],
+      "delta": { "brightness": 8, "harshness": 4, "level": 2 }
+    },
+    {
+      "id": "blend_in",
+      "match_any": ["blend in", "sit back", "sit in the mix", "less forward"],
+      "delta": { "level": -2, "brightness": -4, "space": 4 }
+    },
+    {
+      "id": "less_resonant",
+      "match_any": ["less resonant", "ringy", "too ringy", "tame ringing", "tame resonances"],
+      "delta": { "harshness": -6, "body": -4 }
+    },
+    {
+      "id": "more_definition",
+      "match_any": ["more definition", "more defined", "separate notes", "less smeared"],
+      "delta": { "tighten": 10, "crunch": -4, "brightness": 4 }
+    },
+    {
+      "id": "more_glue",
+      "match_any": ["more glue", "glue it", "gel", "cohesive"],
+      "delta": { "tighten": -4, "crunch": 4, "space": 2 }
+    },
+    {
+      "id": "less_glue",
+      "match_any": ["less glue", "too glued", "more separation", "less smeary"],
+      "delta": { "tighten": 6, "crunch": -4, "space": -2 }
+    },
+    {
+      "id": "clean_transients",
+      "match_any": ["clean transients", "less spiky", "spiky", "too spiky", "tame spikes"],
+      "delta": { "harshness": -8, "tighten": -4 }
+    },
+    {
+      "id": "more_punch",
+      "match_any": ["more punch", "punchier", "hit harder", "more smack"],
+      "delta": { "tighten": 8, "level": 2, "crunch": 2 }
+    },
+    {
+      "id": "less_punch",
+      "match_any": ["less punch", "too punchy", "softer", "gentler"],
+      "delta": { "tighten": -6, "level": -1 }
+    },
+    {
+      "id": "more_sustain_less_edge",
+      "match_any": ["more sustain but less edge", "sustain without edge", "smooth sustain"],
+      "delta": { "crunch": 8, "harshness": -8, "brightness": -2 }
+    },
+    {
+      "id": "fatter_wider",
+      "match_any": ["fatter and wider", "bigger and wider", "wide and fat"],
+      "delta": { "body": 10, "width": 10 }
+    },
+    {
+      "id": "tighter_wider",
+      "match_any": ["tighter and wider", "tight and wide"],
+      "delta": { "tighten": 10, "width": 10, "body": -4 }
+    },
+    {
+      "id": "less_noise_like",
+      "match_any": ["less noisy", "less hiss", "less buzz", "tame noise"],
+      "delta": { "brightness": -4, "crunch": -4, "harshness": -4 }
+    },
+    {
+      "id": "more_polished",
+      "match_any": ["more polished", "polish it", "more finished", "make it nice"],
+      "delta": { "harshness": -8, "tighten": 6, "space": 2 }
+    },
+    {
+      "id": "more_raw",
+      "match_any": ["more raw", "rawer", "less polished", "grungier"],
+      "delta": { "crunch": 8, "space": -4, "harshness": 2 }
+    },
+    {
+      "id": "less_phasey",
+      "match_any": ["less phasey", "phasey", "swirly", "too swirly"],
+      "delta": { "width": -8 }
+    },
+    {
+      "id": "more_stereo_interest",
+      "match_any": ["more stereo", "more movement", "more stereo interest"],
+      "delta": { "width": 8, "space": 4 }
+    },
+    {
+      "id": "dry_punchy",
+      "match_any": ["dry and punchy", "dryer and punchier"],
+      "delta": { "space": -10, "tighten": 8 }
+    },
+    {
+      "id": "warm_and_smooth",
+      "match_any": ["warm and smooth", "warmer and smoother"],
+      "delta": { "body": 10, "harshness": -10, "brightness": -4 }
+    },
+    {
+      "id": "bright_and_tight",
+      "match_any": ["bright and tight", "brighter and tighter"],
+      "delta": { "brightness": 10, "tighten": 10, "body": -4 }
+    },
+    {
+      "id": "less_low_end",
+      "match_any": ["less low end", "take out low end", "too much low end"],
+      "delta": { "tighten": 10, "body": -8 }
+    },
+    {
+      "id": "more_low_end",
+      "match_any": ["more low end", "needs more low end", "add low end"],
+      "delta": { "body": 10, "tighten": -4 }
+    },
+    {
+      "id": "less_midrange",
+      "match_any": ["less mids", "less midrange", "mid heavy", "too many mids"],
+      "delta": { "body": -8, "harshness": -2 }
+    },
+    {
+      "id": "more_midrange",
+      "match_any": ["more mids", "more midrange", "needs mids", "push mids"],
+      "delta": { "body": 6, "harshness": 2 }
+    },
+    {
+      "id": "less_nasal",
+      "match_any": ["less nasal", "nasally", "nosey"],
+      "delta": { "body": -8, "harshness": -4 }
+    },
+    {
+      "id": "more_nasal",
+      "match_any": ["more nasal", "more honk", "honkier"],
+      "delta": { "body": 6, "harshness": 2 }
+    },
+    {
+      "id": "less_splashy_space",
+      "match_any": ["less splashy", "reverb is splashy", "tame splash"],
+      "delta": { "space": -10, "brightness": -2 }
+    },
+    {
+      "id": "more_depth",
+      "match_any": ["more depth", "deeper", "more 3d", "more dimension"],
+      "delta": { "space": 8, "width": 6, "level": -1 }
+    },
+    {
+      "id": "less_depth",
+      "match_any": ["less depth", "flatter", "too deep"],
+      "delta": { "space": -8, "width": -4, "level": 1 }
+    },
+    {
+      "id": "vocal_de_ess",
+      "match_any": ["de ess", "de-ess", "tame sibilance", "less sibilant", "less sizzle on vocals", "esses are sharp"],
+      "delta": { "harshness": -12, "brightness": -4 }
+    },
+    {
+      "id": "vocal_presence",
+      "match_any": ["vocal more present", "bring vocal forward", "voice forward", "vocals forward", "lead vocal up front"],
+      "delta": { "brightness": 6, "level": 3, "space": -2 }
+    },
+    {
+      "id": "vocal_warmth",
+      "match_any": ["add chest", "more chest", "thicker vocal", "warmer vocal", "less thin vocal"],
+      "delta": { "body": 8, "brightness": -3, "harshness": -2 }
+    },
+    {
+      "id": "vocal_breathy",
+      "match_any": ["more airy vocal", "breathier vocal", "more breath on vocal", "airy voice"],
+      "delta": { "brightness": 6, "harshness": -3, "space": 2 }
+    },
+    {
+      "id": "vocal_plosive_down",
+      "match_any": ["less plosive", "tame plosives", "plosives down", "less pops", "b and p too strong"],
+      "delta": { "tighten": 10, "body": -6 }
+    },
+    {
+      "id": "upright_more_wood",
+      "match_any": ["more wood", "more woody", "upright more wood", "bass more wood", "more body in upright"],
+      "delta": { "body": 8, "brightness": -3, "harshness": -2 }
+    },
+    {
+      "id": "upright_less_finger_noise",
+      "match_any": ["less finger noise", "finger noise down", "string noise down", "less squeak", "upright less click"],
+      "delta": { "harshness": -10, "brightness": -5 }
+    },
+    {
+      "id": "upright_tighten_low_end",
+      "match_any": ["upright tighter", "tighten upright", "bass less bloom", "less bloom in bass", "upright less boom"],
+      "delta": { "tighten": 12, "body": -6 }
+    },
+    {
+      "id": "upright_more_bloom",
+      "match_any": ["upright more bloom", "bass more bloom", "rounder upright", "more bloom in bass"],
+      "delta": { "tighten": -8, "body": 6, "space": 1 }
+    },
+    {
+      "id": "upright_articulation",
+      "match_any": ["upright more articulation", "bass more articulation", "define upright notes", "clearer upright"],
+      "delta": { "tighten": 8, "brightness": 4, "crunch": -2 }
+    },
+    {
+      "id": "emergency_reset",
+      "match_any": ["reset", "start over", "undo everything", "back to zero", "flat"],
+      "delta": { "level": 0, "brightness": 0, "harshness": 0, "body": 0, "tighten": 0, "crunch": 0, "width": 0, "space": 0 },
+      "special": "reset_all_macros_to_default"
+    }
+  ],
+  "defaults": {
+    "macro_defaults": {
+      "level": 50,
+      "brightness": 50,
+      "harshness": 50,
+      "body": 50,
+      "tighten": 50,
+      "crunch": 50,
+      "width": 50,
+      "space": 20
+    }
+  }
+}

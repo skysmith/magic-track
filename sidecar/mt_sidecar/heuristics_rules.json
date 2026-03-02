@@ -1,0 +1,55 @@
+{
+  "synonyms": {
+    "level": ["level", "loud", "volume", "gain"],
+    "brightness": ["bright", "brightness", "air", "sparkle", "shimmer", "top"],
+    "harshness": ["harsh", "harshness", "sibilance", "sibilant", "piercing", "icepick", "fizz"],
+    "body": ["body", "warm", "warmth", "thick", "thickness", "weight", "low end", "chest", "woof", "whoof", "woofy", "whoofy"],
+    "tighten": ["tight", "tighten", "punch", "punchy", "defined", "definition"],
+    "crunch": ["crunch", "grit", "grind", "distortion", "drive", "saturation"],
+    "width": ["width", "wide", "wider", "stereo", "mono", "narrow"],
+    "space": ["space", "room", "reverb", "delay", "wet", "dry", "ambience"]
+  },
+  "contains_rules": [
+    { "terms": ["bright", "sparkle", "air"], "add": { "brightness": 8.0 } },
+    { "terms": ["dark"], "add": { "brightness": -8.0 } },
+    { "terms": ["harsh", "sibil", "pierc"], "add": { "harshness": -10.0 } },
+    { "terms": ["pokey", "spiky"], "add": { "harshness": -10.0, "brightness": -4.0 } },
+    { "terms": ["warm", "body", "thick", "chest"], "add": { "body": 8.0 } },
+    { "terms": ["muddy", "mud"], "add": { "body": -10.0, "tighten": 6.0 } },
+    { "terms": ["woof", "whoof", "woofy", "whoofy"], "add": { "body": -10.0, "tighten": 8.0 } },
+    { "terms": ["tight", "punch"], "add": { "tighten": 8.0 } },
+    { "terms": ["crunch", "grit", "distort"], "add": { "crunch": 8.0 } },
+    { "terms": ["wide"], "add": { "width": 10.0 } },
+    { "terms": ["mono", "narrow"], "add": { "width": -10.0 } },
+    { "terms": ["reverb", "room", "space", "wet"], "add": { "space": 10.0 } },
+    { "terms": ["dry"], "add": { "space": -10.0 } },
+    { "terms": ["echo", "echoey", "echoy", "washy", "too much verb"], "add": { "space": -12.0, "width": -3.0 } },
+    { "terms": ["not harsh", "less harsh"], "add": { "harshness": -8.0 } },
+    { "terms": ["less crunchy"], "add": { "crunch": -10.0 } },
+    { "terms": ["present", "forward", "up front"], "add": { "brightness": 6.0, "level": 2.0 } }
+  ],
+  "contains_guard_rules": [
+    { "terms": ["clean"], "terms_absent": ["crunch"], "add": { "crunch": -8.0 } }
+  ],
+  "regex_rules": [
+    { "pattern": "\\bmore\\b.+\\bwide|wider\\b", "add": { "width": 8.0 } },
+    { "pattern": "\\bless\\b.+\\bwide|narrow|mono\\b", "add": { "width": -8.0 } },
+    { "pattern": "\\bmore\\b.+\\bdry\\b", "add": { "space": -6.0 } },
+    { "pattern": "\\bmore\\b.+\\bwet|room|space\\b", "add": { "space": 6.0 } },
+    { "pattern": "\\btoo\\b.+\\becho|echoey|echoy|washy\\b", "add": { "space": -10.0 } },
+    { "pattern": "\\btoo\\b.+\\bwoof|whoof|woofy|whoofy\\b", "add": { "body": -8.0, "tighten": 6.0 } }
+  ],
+  "generic_modifiers": {
+    "more_terms": ["more ", "increase ", "add "],
+    "less_terms": ["less ", "reduce "],
+    "without_terms": ["without "],
+    "not_macro_template": "not {macro}",
+    "more_add": 6.0,
+    "less_add": -6.0,
+    "without_add": -6.0
+  },
+  "unknown_adjective_fallback": {
+    "patterns": ["\\btoo\\s+[a-z][a-z0-9_-]*\\b", "\\bless\\s+[a-z][a-z0-9_-]*\\b"],
+    "add": { "body": -6.0, "tighten": 4.0 }
+  }
+}
