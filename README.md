@@ -2,6 +2,23 @@
 
 MagicTrack is a Logic-friendly text-driven tone shaping plugin (AU/VST3) with 8 permanent macros:
 
+## Workspace Metadata
+
+- Name: MagicTrack
+- Domain: lab
+- Status: active
+- Purpose: Text-driven audio plugin and sidecar workflow for tone shaping in Logic-friendly environments
+- Path: lab/audio/magic-track
+- Related:
+  - lab/audio
+  - personal/music
+  - lab/vendor
+- Tags:
+  - audio-plugin
+  - dsp
+  - logic
+  - llm
+
 - `level`
 - `brightness`
 - `harshness`
@@ -64,19 +81,19 @@ Prereqs:
 Example:
 
 ```bash
-git clone https://github.com/juce-framework/JUCE.git /Users/sky/.openclaw/workspace/JUCE
+git clone https://github.com/juce-framework/JUCE.git ~/Documents/Codex/lab/audio/JUCE
 ```
 
 Then use:
 
 ```bash
--DJUCE_DIR=/Users/sky/.openclaw/workspace/JUCE
+-DJUCE_DIR=~/Documents/Codex/lab/audio/JUCE
 ```
 
 Configure:
 
 ```bash
-cd /Users/sky/.openclaw/workspace/magic-track
+cd ~/Documents/Codex/lab/audio/magic-track
 cmake -B build -S . -DJUCE_DIR=/absolute/path/to/JUCE
 ```
 
@@ -89,7 +106,7 @@ cmake --build build --config Release
 ## Quick parser test (no DAW)
 
 ```bash
-cd /Users/sky/.openclaw/workspace/magic-track
+cd ~/Documents/Codex/lab/audio/magic-track
 cmake --build build --target magictrack_parser_cli
 ./build/magictrack_parser_cli "brighter but not harsh"
 ```
@@ -99,7 +116,7 @@ cmake --build build --target magictrack_parser_cli
 Start local sidecar:
 
 ```bash
-cd /Users/sky/.openclaw/workspace/magic-track
+cd ~/Documents/Codex/lab/audio/magic-track
 python3 sidecar/magictrack_sidecar.py
 ```
 
@@ -139,13 +156,13 @@ Plugin UI defaults to:
 Run sidecar regression tests:
 
 ```bash
-cd /Users/sky/.openclaw/workspace/magic-track/sidecar
+cd ~/Documents/Codex/lab/audio/magic-track/sidecar
 python3 -m unittest -v tests/test_service.py
 ```
 
 Heuristic rule config lives in:
 
-- `/Users/sky/.openclaw/workspace/magic-track/sidecar/mt_sidecar/heuristics_rules.json`
+- `sidecar/mt_sidecar/heuristics_rules.json`
 
 ## Notes
 
